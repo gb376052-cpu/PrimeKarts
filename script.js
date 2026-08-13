@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const filterButtons = document.querySelectorAll('.filter-btn');
+const filterButtons = document.querySelectorAll('.filter-btn');
   filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       filterButtons.forEach(b => {
@@ -426,7 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.target.style.fontWeight = 'bold';
       e.target.classList.add('active');
 
-      currentCategory = e.target.getAttribute('data-category');
+      // Trim karke exact category capture karein
+      currentCategory = e.target.getAttribute('data-category').trim();
       applyFiltersAndSort();
     });
   });
@@ -439,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function applyFiltersAndSort() {
+ function applyFiltersAndSort() {
     let filtered = [...productsData];
 
     if (currentCategory && currentCategory !== 'All') {
@@ -452,11 +453,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prodCat === selectedCat) return true;
 
         if (selectedCat === 'laptops' || selectedCat === 'laptop') {
-          return prodCat.includes('laptop') || prodCat.includes('electronics') || prodCat.includes('computer') || prodTitle.includes('laptop') || prodTitle.includes('macbook');
+          return prodCat.includes('laptop') || prodCat.includes('computer') || prodTitle.includes('laptop') || prodTitle.includes('macbook');
         }
 
         if (selectedCat === 'mobiles' || selectedCat === 'mobile') {
-          return prodCat.includes('mobile') || prodCat.includes('phone') || prodCat.includes('electronics') || prodTitle.includes('phone') || prodTitle.includes('iphone');
+          return prodCat.includes('mobile') || prodCat.includes('phone') || prodTitle.includes('phone') || prodTitle.includes('iphone');
         }
 
         return prodCat.includes(selectedCat) || prodTitle.includes(selectedCat);

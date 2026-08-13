@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Clone</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- 📩 EmailJS SDK Integration -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+     (function(){
+        // EmailJS Public Key
+        emailjs.init("n8WuR4Lsk1-9j6_nZ"); 
+     })();
+  </script>
+</head>
+<body>
+
+  <!-- Amazon Navbar -->
+  <header class="navbar">
+    <!-- Logo -->
+    <div class="nav-logo border">
+      <div class="logo">amazon</div>
+      <span>.in</span>
+    </div>
+
+    <!-- Dynamic Address / Deliver to Pincode -->
+    <div class="nav-address border" id="location-btn" style="cursor: pointer;" title="Click to change location">
+      <p class="add-first">Deliver to</p>
+      <div class="add-icon">
+        <i class="fa-solid fa-location-dot"></i>
+        <p class="add-second" id="nav-pincode-display">Select Pincode</p>
+      </div>
+    </div>
+
+    <!-- Amazon Search Bar -->
+    <div class="nav-search">
+      <select class="search-select">
+        <option>All</option>
+      </select>
+      <input placeholder="Search Amazon" class="search-input" id="search-input">
+      <div class="search-icon" id="search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    <!-- Returns & Orders Button -->
+    <div class="nav-return border" id="my-orders-btn" style="cursor: pointer;">
+      <p><span>Returns</span></p>
+      <p class="nav-second">& Orders</p>
+    </div>
+
+    <!-- Account & Lists -->
+    <div class="nav-signin border" id="auth-btn" style="cursor: pointer;">
+      <p><span id="nav-user-name">Hello, sign in</span></p>
+      <p class="nav-second">Account & Lists</p>
+    </div>
+
+    <!-- Cart -->
+    <div class="nav-cart border" id="open-cart-btn" style="cursor: pointer;">
+      <div class="cart-icon-container">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cart-count">0</span>
+      </div>
+      Cart
+    </div>
+  </header>
+
+  <!-- Hero / Banner Section -->
+  <div class="hero-section">
+    <div class="hero-msg">
+      <p>You are on amazon.com. You can also shop on Amazon India for millions of products with fast local delivery. <a href="#">Click here to go to amazon.in</a></p>
+    </div>
+  </div>
+
+  <!-- Dynamic Products Section with Category & Sort Bar -->
+  <div class="main-content">
+    
+    <!-- Category & Sorting Filter Bar -->
+    <div class="filter-bar" style="background: white; padding: 12px 20px; margin: 0 auto 20px auto; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; gap: 15px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex-wrap: wrap;">
+      
+      <!-- Category Buttons -->
+      <div class="category-buttons" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="filter-btn active" data-category="All" style="padding: 6px 14px; border: 1px solid #d5d9d9; border-radius: 20px; background: #ffd814; font-weight: bold; cursor: pointer; font-size: 13px;">All</button>
+        <button class="filter-btn" data-category="Laptops" style="padding: 6px 14px; border: 1px solid #d5d9d9; border-radius: 20px; background: #f0f2f2; cursor: pointer; font-size: 13px;">Laptops</button>
+        <button class="filter-btn" data-category="Mobiles" style="padding: 6px 14px; border: 1px solid #d5d9d9; border-radius: 20px; background: #f0f2f2; cursor: pointer; font-size: 13px;">Mobiles</button>
+        <button class="filter-btn" data-category="Fashion" style="padding: 6px 14px; border: 1px solid #d5d9d9; border-radius: 20px; background: #f0f2f2; cursor: pointer; font-size: 13px;">Fashion</button>
+        <button class="filter-btn" data-category="Kitchen" style="padding: 6px 14px; border: 1px solid #d5d9d9; border-radius: 20px; background: #f0f2f2; cursor: pointer; font-size: 13px;">Kitchen</button>
+      </div>
+
+      <!-- Price Sorting Dropdown -->
+      <div class="sort-container" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: bold;">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select" style="padding: 6px 10px; border-radius: 6px; border: 1px solid #d5d9d9; cursor: pointer; font-size: 13px;">
+          <option value="default">Featured</option>
+          <option value="low-to-high">Price: Low to High</option>
+          <option value="high-to-low">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <h2 class="section-title">Featured Products</h2>
+    <div id="products-container" class="products-grid">
+      <!-- JavaScript dynamic product cards here -->
+    </div>
+  </div>
+
+  <!-- Amazon Footer Section -->
+  <footer>
+    <div class="foot-panel1" id="back-to-top">
+      Back to Top
+    </div>
+
+    <div class="foot-panel2">
+      <ul>
+        <p>Get to Know Us</p>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">About Amazon</a>
+        <a href="#">Investor Relations</a>
+      </ul>
+      <ul>
+        <p>Connect with Us</p>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </ul>
+      <ul>
+        <p>Make Money with Us</p>
+        <a href="#">Sell on Amazon</a>
+        <a href="#">Become an Affiliate</a>
+        <a href="#">Fulfillment by Amazon</a>
+      </ul>
+      <ul>
+        <p>Let Us Help You</p>
+        <a href="#">Your Account</a>
+        <a href="#">Returns Centre</a>
+        <a href="#">Help</a>
+      </ul>
+    </div>
+
+    <div class="foot-panel3">
+      <div class="logo">amazon</div>
+      <div class="country-selector">
+        <i class="fa-solid fa-globe"></i> English
+      </div>
+    </div>
+
+    <div class="foot-panel4">
+      <div class="pages">
+        <a href="#">Conditions of Use & Sale</a>
+        <a href="#">Privacy Notice</a>
+      </div>
+      <div class="copyright">
+        © 1996-2026, Amazon.com, Inc. or its affiliates (Amazon Clone Project)
+      </div>
+    </div>
+  </footer>
+
+  <!-- 📍 Location / Pincode Modal -->
+  <div id="pincode-modal" class="cart-modal">
+    <div class="cart-modal-content" style="max-width: 380px;">
+      <span class="close-cart" id="close-pincode-btn">&times;</span>
+      <h2 style="font-size: 18px; margin-bottom: 5px;">Choose your location</h2>
+      <p style="font-size: 12px; color: #565959; margin-bottom: 15px;">Select a delivery location to see product availability and delivery options.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <input type="text" id="user-pincode-input" placeholder="Enter a 6-digit Pincode (e.g. 110001)" maxlength="6" style="width: 100%; padding: 9px; border: 1px solid #a6a6a6; border-radius: 4px; font-size: 13px;">
+        <button id="apply-pincode-btn" style="width: 100%; background: #ffd814; border: 1px solid #fcd200; padding: 9px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px;">Apply Pincode</button>
+      </div>
+      <p id="pincode-status-msg" style="font-size: 12px; margin-top: 10px; text-align: center; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Login / Signup) -->
+  <div id="auth-modal" class="cart-modal">
+    <div class="cart-modal-content" style="max-width: 400px;">
+      <span class="close-cart" id="close-auth-btn">&times;</span>
+      
+      <!-- Login Form -->
+      <div id="login-box">
+        <h2>Sign-In</h2>
+        <form id="login-form" style="margin-top: 15px;">
+          <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Email</label>
+          <input type="email" id="login-email" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #a6a6a6; border-radius: 3px;">
+          
+          <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Password</label>
+          <input type="password" id="login-password" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #a6a6a6; border-radius: 3px;">
+          
+          <button type="submit" class="auth-submit-btn" style="width: 100%; background: #f0c14b; border: 1px solid #a88734; padding: 8px; border-radius: 3px; cursor: pointer;">Continue</button>
+        </form>
+        <p style="font-size: 12px; margin-top: 15px; text-align: center;">
+          New to Amazon? <a href="#" id="show-signup" style="color: #007185; font-weight: bold;">Create your account</a>
+        </p>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signup-box" style="display: none;">
+        <h2>Create Account</h2>
+        <form id="signup-form" style="margin-top: 15px;">
+          <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Your name</label>
+          <input type="text" id="signup-name" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #a6a6a6; border-radius: 3px;">
+
+          <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Email</label>
+          <input type="email" id="signup-email" required style="width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #a6a6a6; border-radius: 3px;">
+          
+          <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 5px;">Password (at least 6 characters)</label>
+          <input type="password" id="signup-password" minlength="6" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #a6a6a6; border-radius: 3px;">
+          
+          <button type="submit" class="auth-submit-btn" style="width: 100%; background: #f0c14b; border: 1px solid #a88734; padding: 8px; border-radius: 3px; cursor: pointer;">Create Account</button>
+        </form>
+        <p style="font-size: 12px; margin-top: 15px; text-align: center;">
+          Already have an account? <a href="#" id="show-login" style="color: #007185; font-weight: bold;">Sign in</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shopping Cart Modal with Payment & Delivery Address Selection -->
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-modal-content" style="max-width: 500px; max-height: 90vh; overflow-y: auto;">
+      <span class="close-cart" id="close-cart-btn">&times;</span>
+      <h2>Shopping Cart</h2>
+      
+      <div id="cart-items-container" style="margin-top: 15px; max-height: 200px; overflow-y: auto;">
+        <!-- Dynamic Cart Items -->
+      </div>
+
+      <!-- Shipping / Delivery Address Section -->
+      <div id="shipping-address-box" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+        <h3 style="font-size: 14px; margin-bottom: 10px;">Delivery Address:</h3>
+        <form id="shipping-form" style="display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" id="ship-name" placeholder="Full Name *" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;">
+          <input type="tel" id="ship-phone" placeholder="Phone Number *" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;">
+          <textarea id="ship-address" placeholder="Flat, House no., Building, Street, Area *" rows="2" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; font-family: inherit;"></textarea>
+          <input type="text" id="ship-pincode" placeholder="6-digit Pincode *" maxlength="6" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px;">
+        </form>
+      </div>
+
+      <!-- Payment Options Selection -->
+      <div id="payment-selection-box" style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px;">
+        <h3 style="font-size: 14px; margin-bottom: 8px;">Select Payment Method:</h3>
+        <div style="display: flex; gap: 15px; font-size: 13px;">
+          <label style="cursor: pointer;"><input type="radio" name="payment-method" value="UPI" checked> UPI / GPay</label>
+          <label style="cursor: pointer;"><input type="radio" name="payment-method" value="Card"> Credit/Debit Card</label>
+          <label style="cursor: pointer;"><input type="radio" name="payment-method" value="COD"> Cash on Delivery</label>
+        </div>
+      </div>
+
+      <div style="margin-top: 15px; border-top: 1px solid #ddd; padding-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <h3>Subtotal: <span id="cart-total-price" style="color: #B12704;">₹0</span></h3>
+        <button id="checkout-btn" style="background: #ffd814; border: 1px solid #fcd200; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">Proceed to Buy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Orders Modal -->
+  <div id="orders-modal" class="cart-modal">
+    <div class="cart-modal-content" style="max-width: 650px;">
+      <span class="close-cart" id="close-orders-btn">&times;</span>
+      <h2>Your Order History</h2>
+      <div id="orders-list-container" style="margin-top: 15px; max-height: 400px; overflow-y: auto;">
+        <p style="color: #777;">Loading your orders...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details View Modal -->
+  <div id="product-detail-modal" class="cart-modal" style="display: none;">
+    <div class="cart-modal-content" style="max-width: 650px; position: relative;">
+      <span class="close-cart" id="close-detail-modal">&times;</span>
+      <div id="product-detail-body" style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+        <!-- Dynamic Product Details inserted by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>

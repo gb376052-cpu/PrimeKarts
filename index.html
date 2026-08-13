@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amazon Clone</title>
+  <title>PrimeKarts - Online Shopping</title>
   <link rel="stylesheet" href="style.css">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,12 +19,11 @@
 </head>
 <body>
 
-  <!-- Amazon Navbar -->
+  <!-- PrimeKarts Navbar -->
   <header class="navbar">
     <!-- Logo -->
-    <div class="nav-logo border">
-      <div class="logo">amazon</div>
-      <span>.in</span>
+    <div class="nav-logo border" style="display: flex; align-items: center; gap: 2px;">
+      <span class="logo" style="font-size: 22px; font-weight: bold; color: #ff9900;">PrimeKarts</span>
     </div>
 
     <!-- Dynamic Address / Deliver to Pincode -->
@@ -36,12 +35,12 @@
       </div>
     </div>
 
-    <!-- Amazon Search Bar -->
+    <!-- Search Bar -->
     <div class="nav-search">
       <select class="search-select">
         <option>All</option>
       </select>
-      <input placeholder="Search Amazon" class="search-input" id="search-input">
+      <input placeholder="Search PrimeKarts" class="search-input" id="search-input">
       <div class="search-icon" id="search-btn">
         <i class="fa-solid fa-magnifying-glass"></i>
       </div>
@@ -69,15 +68,15 @@
     </div>
   </header>
 
-  <!-- Hero / Banner Section -->
-  <div class="hero-section">
+  <!-- Hero / Promotional Banner (Updated to PrimeKarts and your Render backend link) -->
+  <div class="hero-section" style="background-color: #febd69; color: #111; padding: 12px; text-align: center; font-weight: bold; font-size: 14px;">
     <div class="hero-msg">
-      <p>You are on amazon.com. You can also shop on Amazon India for millions of products with fast local delivery. <a href="#">Click here to go to amazon.in</a></p>
+      <p>Welcome to PrimeKarts! Enjoy fast local delivery and seamless shopping experience. <a href="https://primekarts.onrender.com/" target="_blank" style="color: #007185; text-decoration: underline; margin-left: 5px;">Click here to explore PrimeKarts</a></p>
     </div>
   </div>
 
   <!-- Dynamic Products Section with Category & Sort Bar -->
-  <div class="main-content">
+  <main class="main-content">
     
     <!-- Category & Sorting Filter Bar -->
     <div class="filter-bar" style="background: white; padding: 12px 20px; margin: 0 auto 20px auto; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; gap: 15px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); flex-wrap: wrap;">
@@ -106,9 +105,9 @@
     <div id="products-container" class="products-grid">
       <!-- JavaScript dynamic product cards here -->
     </div>
-  </div>
+  </main>
 
-  <!-- Amazon Footer Section -->
+  <!-- PrimeKarts Footer Section with Custom Social Links -->
   <footer>
     <div class="foot-panel1" id="back-to-top">
       Back to Top
@@ -119,20 +118,20 @@
         <p>Get to Know Us</p>
         <a href="#">Careers</a>
         <a href="#">Blog</a>
-        <a href="#">About Amazon</a>
+        <a href="#">About PrimeKarts</a>
         <a href="#">Investor Relations</a>
       </ul>
       <ul>
-        <p>Connect with Us</p>
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
+        <p>Connect with Me</p>
+        <a href="https://github.com/gb376052-cpu" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/gaurav-bisht-917ab0336" target="_blank">LinkedIn</a>
+        <a href="https://www.instagram.com/rajput_gauravbisht" target="_blank">Instagram</a>
       </ul>
       <ul>
         <p>Make Money with Us</p>
-        <a href="#">Sell on Amazon</a>
+        <a href="#">Sell on PrimeKarts</a>
         <a href="#">Become an Affiliate</a>
-        <a href="#">Fulfillment by Amazon</a>
+        <a href="#">Fulfillment by PrimeKarts</a>
       </ul>
       <ul>
         <p>Let Us Help You</p>
@@ -142,8 +141,8 @@
       </ul>
     </div>
 
-    <div class="foot-panel3">
-      <div class="logo">amazon</div>
+    <div class="foot-panel3" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+      <div class="logo" style="font-weight: bold; color: #ff9900; font-size: 20px;">PrimeKarts</div>
       <div class="country-selector">
         <i class="fa-solid fa-globe"></i> English
       </div>
@@ -155,7 +154,7 @@
         <a href="#">Privacy Notice</a>
       </div>
       <div class="copyright">
-        © 1996-2026, Amazon.com, Inc. or its affiliates (Amazon Clone Project)
+        © 1996-2026, PrimeKarts, Inc. or its affiliates (Developed by Gaurav Bisht)
       </div>
     </div>
   </footer>
@@ -193,7 +192,7 @@
           <button type="submit" class="auth-submit-btn" style="width: 100%; background: #f0c14b; border: 1px solid #a88734; padding: 8px; border-radius: 3px; cursor: pointer;">Continue</button>
         </form>
         <p style="font-size: 12px; margin-top: 15px; text-align: center;">
-          New to Amazon? <a href="#" id="show-signup" style="color: #007185; font-weight: bold;">Create your account</a>
+          New to PrimeKarts? <a href="#" id="show-signup" style="color: #007185; font-weight: bold;">Create your account</a>
         </p>
       </div>
 

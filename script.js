@@ -1,7 +1,8 @@
 // API & Global State Variables
-const API_URL = 'http://localhost:5000/api/products';
-const AUTH_URL = 'http://localhost:5000/api/auth';
-const ORDER_URL = 'http://localhost:5000/api/orders';
+const BASE_URL = 'https://primekarts.onrender.com';
+const API_URL = `${BASE_URL}/api/products`;
+const AUTH_URL = `${BASE_URL}/api/auth`;
+const ORDER_URL = `${BASE_URL}/api/orders`;
 
 let productsData = []; 
 let cartItems = JSON.parse(localStorage.getItem('amazon_cart')) || []; 
@@ -17,7 +18,6 @@ function escapeHTML(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
-
 // Helper: Safely extract float numeric price
 function getNumericPrice(price) {
   if (typeof price === 'number') return price;
@@ -139,15 +139,11 @@ window.addToCart = function(productId) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // DOM Elements
   const productsContainer = document.getElementById('products-container');
   const searchInput = document.getElementById('search-input');
   const searchButton = document.getElementById('search-btn');
-
-  // Deliver to Pincode Click Handler
   const locationBtn = document.getElementById('location-btn') || document.querySelector('.nav-address');
 
-  // Function to update Pincode Text on UI
   function updateDeliverToUI(pincode) {
     const pincodeDisplay = document.getElementById('nav-pincode-display') || document.querySelector('.add-second');
     if (pincodeDisplay) {
@@ -155,13 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load stored pincode on startup
   const storedPincode = localStorage.getItem('amazon_pincode') || '248007';
   updateDeliverToUI(storedPincode);
 
   if (locationBtn) {
     locationBtn.style.cursor = 'pointer';
-    
     locationBtn.addEventListener('click', () => {
       const currentPin = localStorage.getItem('amazon_pincode') || '248007';
       const newPincode = prompt('Enter your 6-digit delivery pincode:', currentPin);
@@ -172,25 +166,19 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.setItem('amazon_pincode', cleanPin);
           updateDeliverToUI(cleanPin);
 
-          // Cart modal ke pincode input field me auto-fill
           const shipPincodeInput = document.getElementById('ship-pincode');
           if (shipPincodeInput) {
             shipPincodeInput.value = cleanPin;
           }
 
-          if (typeof showToast === 'function') {
-            showToast(`Delivery pincode updated to ${cleanPin}!`, 'success');
-          }
+          showToast(`Delivery pincode updated to ${cleanPin}!`, 'success');
         } else {
-          if (typeof showToast === 'function') {
-            showToast('Please enter a valid 6-digit pincode.', 'error');
-          }
+          showToast('Please enter a valid 6-digit pincode.', 'error');
         }
       }
     });
   }
 
-  // Cart Modal Elements
   const openCartBtn = document.getElementById('open-cart-btn');
   const closeCartBtn = document.getElementById('close-cart-btn');
   const cartModal = document.getElementById('cart-modal');
@@ -198,13 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartTotalPrice = document.getElementById('cart-total-price');
   const checkoutBtn = document.getElementById('checkout-btn');
 
-  // Shipping Form Inputs
   const shipNameInput = document.getElementById('ship-name');
   const shipPhoneInput = document.getElementById('ship-phone');
   const shipAddressInput = document.getElementById('ship-address');
   const shipPincodeInput = document.getElementById('ship-pincode');
 
-  // Auth Elements
   const navSigninBtn = document.querySelector('.nav-signin');
   const authModal = document.getElementById('auth-modal');
   const closeAuthBtn = document.getElementById('close-auth-btn');
@@ -215,25 +201,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');
 
-  // Orders Modal Elements
   const ordersModal = document.getElementById("orders-modal");
   const myOrdersBtn = document.getElementById("my-orders-btn");
   const closeOrdersBtn = document.getElementById("close-orders-btn");
   const ordersListContainer = document.getElementById("orders-list-container");
 
-  // Product Details Modal Elements
   const detailModal = document.getElementById('product-detail-modal');
   const detailBody = document.getElementById('product-detail-body');
   const closeDetailBtn = document.getElementById('close-detail-modal');
 
-  // State Variables
   let currentCategory = 'All';
   let currentSort = 'default';
 
-  // Synchronize cart count on page load
   updateCartCountUI();
 
-  // Cart Modal Toggles & Pre-filling Name if Logged In
   if (openCartBtn && cartModal) {
     openCartBtn.addEventListener('click', () => {
       cartModal.style.display = 'flex';
@@ -252,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Check Logged-in User Session on Load
   checkUserAuth();
 
   function checkUserAuth() {
@@ -276,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Auth Modal Toggles
   if (navSigninBtn) {
     navSigninBtn.addEventListener('click', () => {
       const user = localStorage.getItem('amazon_user');
@@ -308,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Register API Call
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -341,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Login API Call
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -373,7 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Fetch Products
   async function fetchProducts(searchQuery = '') {
     try {
       let url = API_URL;
@@ -384,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url);
       const data = await response.json();
 
-      // Ensure data is array
       productsData = Array.isArray(data) ? data : [];
       applyFiltersAndSort();
     } catch (error) {
@@ -395,7 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Render Products Grid
   function renderProducts(products) {
     if (!productsContainer) return;
 
@@ -411,13 +385,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     productsContainer.innerHTML = products.map(product => {
       const pId = product._id || product.id;
-      const imgUrl = product.imageUrl || product.image || 'https://via.placeholder.com/200';
+      const imgUrl = product.imageUrl || product.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';
       const numericPrice = getNumericPrice(product.price);
       const formattedPrice = `₹${numericPrice.toLocaleString('en-IN')}`;
 
       return `
         <div class="product-card" data-id="${escapeHTML(pId)}">
-          <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(product.title || product.name)}" onerror="this.src='https://via.placeholder.com/200';">
+          <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(product.title || product.name)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';">
           <h3>${escapeHTML(product.title || product.name)}</h3>
           <p class="category">${escapeHTML(product.category || 'General')}</p>
           <p class="price">${formattedPrice}</p>
@@ -427,7 +401,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // Search Logic
   function performSearch() {
     const query = searchInput ? searchInput.value.trim() : '';
     fetchProducts(query);
@@ -440,7 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Filter & Sort Handling
   const filterButtons = document.querySelectorAll('.filter-btn');
   filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -467,7 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Filter and Sort Logic
   function applyFiltersAndSort() {
     let filtered = [...productsData];
 
@@ -481,19 +452,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prodCat === selectedCat) return true;
 
         if (selectedCat === 'laptops' || selectedCat === 'laptop') {
-          return prodCat.includes('laptop') || 
-                 prodCat.includes('electronics') || 
-                 prodCat.includes('computer') || 
-                 prodTitle.includes('laptop') || 
-                 prodTitle.includes('macbook');
+          return prodCat.includes('laptop') || prodCat.includes('electronics') || prodCat.includes('computer') || prodTitle.includes('laptop') || prodTitle.includes('macbook');
         }
 
         if (selectedCat === 'mobiles' || selectedCat === 'mobile') {
-          return prodCat.includes('mobile') || 
-                 prodCat.includes('phone') || 
-                 prodCat.includes('electronics') || 
-                 prodTitle.includes('phone') || 
-                 prodTitle.includes('iphone');
+          return prodCat.includes('mobile') || prodCat.includes('phone') || prodCat.includes('electronics') || prodTitle.includes('phone') || prodTitle.includes('iphone');
         }
 
         return prodCat.includes(selectedCat) || prodTitle.includes(selectedCat);
@@ -509,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts(filtered);
   }
 
-  // Product Details Modal & Cart Event Delegation
   if (productsContainer) {
     productsContainer.addEventListener('click', (e) => {
       const card = e.target.closest('.product-card');
@@ -517,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const productId = card.getAttribute('data-id');
 
-      // Add to Cart button click
       if (e.target && e.target.classList.contains('add-to-cart-btn')) {
         window.addToCart(productId);
 
@@ -534,16 +495,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Open Modal on Card Click
       const product = productsData.find(p => String(p._id || p.id) === String(productId));
 
       if (product && detailModal && detailBody) {
-        const imgUrl = product.imageUrl || product.image || 'https://via.placeholder.com/200';
+        const imgUrl = product.imageUrl || product.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';
         const formattedPrice = `₹${getNumericPrice(product.price).toLocaleString('en-IN')}`;
 
         detailBody.innerHTML = `
           <div style="flex: 1; min-width: 200px; text-align: center;">
-            <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(product.title || product.name)}" style="max-width: 100%; height: 230px; object-fit: contain;" onerror="this.src='https://via.placeholder.com/200';">
+            <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(product.title || product.name)}" style="max-width: 100%; height: 230px; object-fit: contain;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';">
           </div>
           <div style="flex: 1.5; min-width: 220px;">
             <h2 style="font-size: 18px; color: #0f1111; margin-bottom: 8px;">${escapeHTML(product.title || product.name)}</h2>
@@ -580,7 +540,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Render Cart Modal Items
   function renderCartModalItems() {
     if (!cartItemsContainer || !cartTotalPrice) return;
 
@@ -630,7 +589,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.renderCartModalItems = renderCartModalItems;
 
-  // Quantity Change & Item Removal Listener
   if (cartItemsContainer) {
     cartItemsContainer.addEventListener('click', (e) => {
       const index = parseInt(e.target.getAttribute('data-index'), 10);
@@ -656,7 +614,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Checkout Handler
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', async () => {
       if (cartItems.length === 0) {
@@ -688,12 +645,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const shippingDetails = { 
-  fullName: name, 
-  name: name, 
-  phone, 
-  address, 
-  pincode 
-};
+        fullName: name, 
+        name: name, 
+        phone, 
+        address, 
+        pincode 
+      };
+      
       const selectedPaymentEl = document.querySelector('input[name="payment-method"]:checked');
       const paymentMethod = selectedPaymentEl ? selectedPaymentEl.value : 'UPI';
 
@@ -791,7 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Order History Fetching
   if (myOrdersBtn) {
     myOrdersBtn.addEventListener("click", () => {
       const token = localStorage.getItem("amazon_token");
@@ -877,7 +834,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Global Backdrop Click & Escape Key Handlers
   window.addEventListener('click', (e) => {
     if (e.target === detailModal) detailModal.style.display = 'none';
     if (e.target === cartModal) cartModal.style.display = 'none';
@@ -894,7 +850,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Scroll to Top
   const backToTopBtn = document.getElementById('back-to-top');
   if (backToTopBtn) {
     backToTopBtn.addEventListener('click', () => {
@@ -902,6 +857,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initial Fetch
   fetchProducts();
 });
